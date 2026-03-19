@@ -8,6 +8,9 @@ import Instalation from './Components/Instalation/Instalation.jsx'
 import Home from './Components/Home/Home.jsx'
 import SingleApp from './Components/SingleApp/SingleApp.jsx'
 
+
+
+
 const route = createBrowserRouter([
   {
     path: '/',
@@ -31,6 +34,16 @@ const route = createBrowserRouter([
       },
       {
         path: 'instalation',
+        loader: async () => {
+          const res = await fetch('/data.json')
+          const data = await res.json()
+
+          const savedIds = JSON.parse(localStorage.getItem("installed-apps")) || [];
+          const installedApps = data.filter(app => savedIds.includes(app.id));
+
+          return installedApps;
+
+        },
         Component: Instalation
       },
       {
