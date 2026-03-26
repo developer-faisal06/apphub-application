@@ -2,6 +2,7 @@
 import { Outlet, useNavigation } from 'react-router';
 import './App.css'
 import NavBar from './Components/NavBar/NavBar';
+import Footer from './Components/Footer/Footer';
 
 function App() {
   
@@ -14,6 +15,7 @@ function App() {
     <NavBar></NavBar>
 {isNavigating && <span className="loading loading-spinner text-success"></span>}
     <Outlet></Outlet>
+    <Footer></Footer>
     
     </>
   )

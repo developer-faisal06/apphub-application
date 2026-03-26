@@ -1,6 +1,19 @@
-import { Search } from 'lucide-react';
+import { Search, Star } from 'lucide-react';
 import React, { useState } from 'react';
-import { useLoaderData } from 'react-router';
+import { Link, useLoaderData } from 'react-router';
+
+const formatDownloads = num => {
+  if (num >= 1000000) {
+    
+    return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+  }
+  if (num >= 1000) {
+   
+    return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+  }
+  return num; 
+};
+
 
 const Application = () => {
     const data = useLoaderData(); 
@@ -40,42 +53,28 @@ const Application = () => {
               
                 {filteredApps.length > 0 ? (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {filteredApps.map((app) => (
-                            <div 
-                                key={app.id} 
-                                className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
-                            >
-                               
-                                <div className="bg-gray-100 aspect-square rounded-xl mb-5 overflow-hidden">
-                                    <img 
-                                        src={app.image} 
-                                        alt={app.title} 
-                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                    />
-                                </div>
-                                
-                                
-                                <h3 className="font-bold text-[#1e293b] text-lg mb-1 truncate">
-                                    {app.title}
-                                </h3>
-                                <p className="text-gray-400 text-xs mb-4">{app.companyName}</p>
-                                
-                                <div className="flex justify-between items-center mt-auto">
-                                  
-                                    <div className="bg-emerald-50 text-emerald-600 text-xs font-bold px-3 py-1.5 rounded-md flex items-center gap-1.5">
-                                        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" />
-                                        </svg>
-                                        {(app.downloads / 1000).toFixed(0)}K
-                                    </div>
-                                    
-                                  
-                                    <div className="bg-orange-50 text-orange-500 text-xs font-bold px-3 py-1.5 rounded-md flex items-center gap-1">
-                                        <span className="text-sm">★</span> {app.ratingAvg}
-                                    </div>
-                                </div>
+                           {filteredApps.map(data => <div>
+                    <Link to={`/appdetails/${data.id}`}>
+                     <div  className="card bg-gray-300 w-full shadow-sm">
+                        <figure>
+                            <img className='w-full h-[250px] object-cover'
+                                src={data.image}
+                                alt="App Thambnails" />
+                        </figure>
+                        <div className="card-body">
+                            <h2 className="card-title ">{data.title}</h2>                            
+                            <div className="card-actions justify-between">
+                                <span className='bg-amber-200 px-1 text-black rounded' >{formatDownloads(data.downloads)}</span>
+                               <div className='flex bg-amber-300 px-1 text-black rounded items-center'>
+                                 <span >{data.ratingAvg} </span>
+                                 <span  >< Star className='w-[15px] ml-1'> </Star> </span>
+                               </div>
                             </div>
-                        ))}
+                        </div>
+                    </div>
+                    </Link>
+
+                </div>)}
                     </div>
                 ) : (
                  
