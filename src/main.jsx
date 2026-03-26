@@ -30,6 +30,11 @@ const route = createBrowserRouter([
       },
       {
         path: 'app',
+        loader: async () => {
+           const res = await fetch('/data.json')
+          const data = await res.json()
+          return data;
+        },
         Component: Application
       },
       {
@@ -37,12 +42,9 @@ const route = createBrowserRouter([
         loader: async () => {
           const res = await fetch('/data.json')
           const data = await res.json()
-
           const savedIds = JSON.parse(localStorage.getItem("installed-apps")) || [];
           const installedApps = data.filter(app => savedIds.includes(app.id));
-
           return installedApps;
-
         },
         Component: Instalation
       },
