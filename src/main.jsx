@@ -7,6 +7,7 @@ import Application from './Components/Application/Application.jsx'
 import Instalation from './Components/Instalation/Instalation.jsx'
 import Home from './Components/Home/Home.jsx'
 import SingleApp from './Components/SingleApp/SingleApp.jsx'
+import NotFound from './Components/NotFound/NotFound.jsx'
 
 
 
@@ -54,6 +55,10 @@ const route = createBrowserRouter([
           .then(res => res.json())
           .then(data => data.find(singleData => singleData.id.toString() === params.id)),
         Component: SingleApp
+      },
+      {
+        path:"*",
+        Component: NotFound
       }
     ]
   }
